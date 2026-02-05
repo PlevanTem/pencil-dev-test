@@ -14,14 +14,36 @@
 
 ```
 pencil-dev test/
+├── .claude/skills/      # Claude 自动化助手技能
+│   ├── gen-llms-txt/    # 标准化 UI 规范生成技能
+│   └── gen-llms-txt-pencil/ # Pencil 专用 D2C2D 规范生成技能
 ├── arcoui/              # ArcoDesign pencil 组件库
+│   ├── components/      # .pen 格式组件源码
+│   ├── llms.txt         # 组件库快速索引 (LLM 友好)
+│   └── llms-full.txt    # 完整组件规范与设计令牌 (LLM 友好)
 ├── test/                # 实验记录和测试文件
-│   └── exp log.md      # 详细实验日志
-├── exp4.pen            # Pencil 设计文件
-├── exp5.pen            # Pencil 设计文件
-├── exp6.pen            # Pencil 设计文件
-└── README.md           # 项目说明文档
+│   └── exp log.md       # 详细实验日志
+├── exp4.pen             # Pencil 设计文件
+├── exp5.pen             # Pencil 设计文件
+├── exp6.pen             # Pencil 设计文件
+└── README.md            # 项目说明文档
 ```
+
+## AI 辅助能力 (Claude Skills)
+
+本项目集成了专门为 AI 辅助开发设计的技能，可通过 Claude 助手调用：
+
+### 1. gen-llms-txt
+用于生成标准化的 `llms.txt` 规范文档，帮助 AI 工具理解任何 UI 组件库、API 和使用模式。遵循行业领先的技术协作实践。
+
+### 2. gen-llms-txt-pencil
+**Pencil 专版**。深入理解 Pencil 的 `.pen` 文件结构、自动布局（Auto Layout）引擎和属性映射。专门用于架起 Pencil 视觉设计与开发代码之间的桥梁。
+
+## LLM 友好文档 (llms.txt)
+
+在 `arcoui/` 目录下，我们提供了遵循 `llms.txt` 规范的文档：
+- **`llms.txt`**: 适合 AI 快速扫描的组件目录。
+- **`llms-full.txt`**: 包含详细的元数据、AI 生成强制约束（禁止硬编码）、全局设计令牌和核心组件 API 示例。
 
 ## 实验内容
 
@@ -64,12 +86,14 @@ pencil-dev test/
 - **组件库**: [Arco Design](https://arco.design/)
 - **目标代码**: HTML, React
 - **AI 辅助**: 大语言模型辅助设计和代码生成
+- **规范标准**: [llms.txt](https://llms.txt.org/)
 
 ## 使用方法
 
 1. 打开 `.pen` 文件查看设计稿
 2. 查看 `test/exp log.md` 了解详细实验过程和结果
-3. 参考 `arcoui/` 目录中的组件库资源
+3. 参考 `arcoui/` 目录中的 `llms.txt` 文档，辅助 AI 进行代码生成
+4. 使用 `@[gen-llms-txt-pencil]` 技能为您的 Pencil 设计生成最新规范
 
 ## 关键发现
 
@@ -79,6 +103,7 @@ pencil-dev test/
 
 - [Arco Design 官方文档](https://arco.design/)
 - Pencil 组件化快捷键：`Ctrl + Alt + K`
+- [llms.txt 规范建议](https://llms.txt.org/)
 
 ## 项目状态
 
@@ -86,4 +111,4 @@ pencil-dev test/
 
 ---
 
-**最后更新**: 2026-02-03
+**最后更新**: 2026-02-06
