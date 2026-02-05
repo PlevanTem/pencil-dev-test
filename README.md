@@ -37,7 +37,7 @@ pencil-dev test/
 用于生成标准化的 `llms.txt` 规范文档，帮助 AI 工具理解任何 UI 组件库、API 和使用模式。遵循行业领先的技术协作实践。
 
 ### 2. gen-llms-txt-pencil
-**Pencil 专版**。深入理解 Pencil 的 `.pen` 文件结构、自动布局（Auto Layout）引擎和属性映射。专门用于架起 Pencil 视觉设计与开发代码之间的桥梁。
+**Pencil 深度解析专版**。具备“全量审计”与“深度解构”能力，能自动遍历设计目录，深入解析嵌套子节点、双语变体映射及 Auto Layout 布局引擎。专门用于将 Pencil 的“设计即代码（Design-as-Code）”高精度转化为开发规范。
 
 ## LLM 友好文档 (llms.txt)
 

@@ -114,4 +114,50 @@ VARIANT_MAPPING: {
 
 ---
 
-**End of SKILL (Pencil Edition)**
+## Required Structure | 必须包含的结构
+
+### 4. COMPONENT SPECIFICATIONS | 组件规范 (核心增强)
+**必须遵循以下原则：**
+- **全量扫描 (Comprehensive Audit)**：必须遍历用户指定的组件目录（如 `[Component Directory Path]`）下的所有 `.pen` 文件，不得遗漏。
+- **子节点解构 (Sub-node Resolution)**：
+    - 不仅描述顶层 Frame，必须深入解析关键子节点（如 `header`, `footer`, `label`, `extra`）。
+    - 记录子节点的特定属性：如文字大小、内边距、特殊边框方向（`stroke-bottom`）。
+- **源文件驱动的变体映射 (Source-Driven Variant Mapping)**：
+    - **优先使用 .pen 文件中的命名规范**：Pencil 通常在 Frame 名称中使用 `Key=Value` (如 `类型=主要按钮`)，必须将其作为变体定义的原始来源。
+    - 将提取出的属性精准映射为目标框架参数（如 `类型` -> `type`, `悬停` -> `hover`）。
+- **布局逻辑转换 (Layout Translation)**：
+    - 强制记录：`Gap` -> `flex-gap`, `Layout` -> `direction`, `Padding` -> `spacing token`。
+
+---
+
+## Technical Transformation Mapping | 技术转换映射表 (通用版)
+
+| Pencil Property | Code Strategy | Description |
+| :--- | :--- | :--- |
+| `reusable: true` | `Component Instance` | 视为目标 UI 库的组件实例，而非原子 div |
+| `enabled: false` | `Conditional Prop` | 映射为受控的布尔值或可选 Slot |
+| `layout: horizontal` | `display: flex; flex-direction: row` | 保持 Flex 布局一致性 |
+| `cornerRadius` | `border-radius` | 使用系统圆角令牌 (radius-small/medium/...) |
+| `fill (hex)` | `Design Token` | 将色值反向查表，转换为该项目的变量名 |
+
+---
+
+## Best Practices Summary | 最佳实践总结
+
+### ✅ DO (必须做)
+- **环境探测**：在生成前，先确认项目的组件存放路径和目标技术栈。
+- **穷尽式审计**：在生成前先罗列所有存在的 `.pen` 文件清单。
+- **深度穿透**：即使是嵌套 3 层以上的 Frame，只要包含布局逻辑就必须提取。
+- **Token 优先**：禁止输出裸色值，必须先在 `METADATA` 中定义颜色与 Token 的对应关系。
+- **命名优先**：始终尊重 `.pen` 节点中的原始命名（Attributes/Names），作为映射的第一参考。
+
+### ❌ DON'T (禁止做)
+- **硬编码路径**：禁止在 SKILL 中假设特定的目录结构（如 `arcoui/`）。
+- **随机抽样**：禁止只选几个组件做演示，必须覆盖项目全量组件。
+- **忽略隐藏节点**：`enabled: false` 的节点往往代表了组件的“可配置项”，必须记录。
+- **硬编码**：禁止在规范中建议开发者使用绝对定位（x/y），除非父容器 `layout="none"`。
+- **臆测属性名**：禁止在未核实 `.pen` 名称的情况下，直接套用外部框架的 Prop 名称。
+
+---
+
+**End of SKILL Document**

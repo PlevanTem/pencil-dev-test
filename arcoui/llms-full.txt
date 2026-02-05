@@ -1,355 +1,164 @@
 ============================================================
-llms-full.txt - Component Library Documentation
+llms-full.txt - ArcoUI Pencil Design System Specs (Comprehensive)
 ============================================================
 
 # 1. METADATA | 元数据
-# Project identification for LLM context | LLM 快速识别项目信息
+PROJECT_NAME: ArcoUI (Arco Design React - Pencil Edition)
+SOURCE_FORMAT: Pencil .pen (version 2.6)
+SYNC_TARGET: React / @arco-design/web-react
+LAYOUT_ENGINE: Pencil Auto Layout (Flex-compatible)
+RESTRICTION_LEVEL: STRICT
 
-PROJECT_NAME: Arco Design React (ArcoUI)
-FRAMEWORK: React (version 16+)
-LANGUAGE: TypeScript
-VERSION: 2.x
-LAST_UPDATE: 2026-02-06
-RESTRICTION_LEVEL: STRICT  # Enforces strict compliance - no violations allowed
+# 2. GLOBAL DESIGN TOKENS (Extracted from .pen) | 全局设计令牌
+# Single Source of Truth for visual consistency.
 
-# 2. AI GENERATION CONSTRAINTS | AI 生成强制约束
-# HIGHEST PRIORITY RULES | 核心规则，优先级最高
+## 2.1 Colors | 颜色
+- primary: #165dffff (Primary Blue - Grade 6)
+- primary-hover: #4080ffff (Grade 5)
+- primary-active: #0e42d2ff (Grade 7)
+- primary-disabled: #94bfffff (Grade 3)
+- success: #00b42aff
+- warning: #ff7d00ff
+- danger: #f53f3fff
+- text-title: #1d2129ff (Text 1)
+- text-body: #4e5969ff (Text 2)
+- text-secondary: #86909cff (Text 3)
+- text-disable: #c9cdd4ff (Text 4)
+- border: #e5e6ebff (Border 2)
+- bg-page: #f2f3f5ff (Fill 2)
+- bg-component: #ffffffff (White)
 
-## 2.1 Component Usage Constraints | 组件使用约束
+## 2.2 Typography | 排版
+- font-family: "PingFang SC", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
+- size-base: 14px
+- size-small: 12px
+- size-large: 16px
+- weight-normal: 400
+- weight-medium: 500
+- weight-bold: 600
 
-1. **Only use official library components | 仅使用官方组件**
-   - Importing and using components from `@arco-design/web-react` is MANDATORY
-   - Do NOT create custom implementations using native HTML elements (div, button, input, etc.) if an Arco equivalent exists.
-   - Example: Use `<Button>` instead of `<button>`, `<Input>` instead of `<input>`.
+## 2.3 Spacing & Radius | 间距与圆角
+- spacing-mini: 4px
+- spacing-small: 8px
+- spacing-medium: 16px
+- spacing-large: 24px
+- radius-small: 2px
+- radius-medium: 4px
+- radius-large: 8px
 
-2. **Strict import paths | 严格导入路径**
-   ```typescript
-   import { Button, Space, Card } from '@arco-design/web-react';
-   import { IconPlus } from '@arco-design/web-react/icon';
-   ```
-
-3. **No style overrides | 禁止样式覆盖**
-   - Inheritance, rewriting, or overriding of component built-in styles is FORBIDDEN.
-   - Never use `!important` syntax.
-   - Do not use `className` to override internal component styles unless absolutely necessary and supported by the API.
-
-## 2.2 Styling Constraints | 样式约束
-# Design Tokens Only - Zero Hardcoding | 绑定设计令牌，杜绝硬编码
-
-1. **No inline styles or hardcoded values | 禁止内联样式和硬编码**
-   - ❌ Inline `style={{}}` attributes (except for dynamic values not covered by props)
-   - ❌ Hardcoded colors (`#165DFF`, `rgb(22, 93, 255)`) - Use tokens!
-   - ❌ Hardcoded dimensions (`px` values) for padding/margin - Use `<Space>` or props.
-
-2. **Design token enforcement | 强制使用设计令牌**
-   - ✅ Use component props for styling (e.g., `type="primary"`, `size="large"`).
-   - ✅ Use the `<Space>` component for layout spacing.
-   - ✅ Use CSS variables (e.g., `var(--color-primary-6)`) if custom CSS is unavoidable.
-
-3. **No custom stylesheets | 禁止自定义样式表**
-   - Do NOT create independent CSS/SCSS/LESS files to style basic components. Use the component's API.
-
-4. **Built-in responsiveness only | 仅使用内置响应式规则**
-   - Use `<Grid.Row>` and `<Grid.Col>` for responsive layouts.
-
-## 2.3 Code Standards Constraints | 代码规范约束
-
-1. **TypeScript strict mode | TypeScript 严格模式**
-   - Use TypeScript type definitions.
-   - Avoid `any` types.
-
-2. **Stable APIs only | 仅使用稳定版 API**
-   - Do not use deprecated props (check official docs if unsure).
-
-3. **Standardized event handlers | 标准化事件处理**
-   - Use standard handlers: `onClick`, `onChange`, `onVisibleChange`, etc.
-
-# 3. GLOBAL DESIGN TOKENS | 全局设计令牌
-# Single Source of Truth - Unified Style Data Source | 样式唯一数据源
-
-## 3.1 Color System | 颜色系统
-
-Arco Design uses a palette based on 10 grades (1-10). Grade 6 is typically the standard color.
-
-COLOR_VARS: {
-  "primary": "var(--color-primary-6)",
-  "primary-hover": "var(--color-primary-5)",
-  "primary-active": "var(--color-primary-7)",
-  "success": "var(--color-success-6)",
-  "warning": "var(--color-warning-6)",
-  "danger": "var(--color-danger-6)",
-  "text-title": "var(--color-text-1)",
-  "text-body": "var(--color-text-2)",
-  "text-secondary": "var(--color-text-3)",
-  "text-disable": "var(--color-text-4)",
-  "bg-body": "var(--color-bg-1)",
-  "bg-component": "var(--color-bg-2)",
-  "bg-popup": "var(--color-bg-5)",
-  "border": "var(--color-border-2)"
-}
-
-## 3.2 Typography System | 排版系统
-
-TYPOGRAPHY_VARS: {
-  "font-family": "Inter, -apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif",
-  "font-size-body": "14px",
-  "line-height-body": "1.5715"
-}
-
-## 3.3 Layout & Decoration | 布局与装饰
-
-SPACING_SIZE: {
-  "mini": "4px",
-  "small": "8px",
-  "medium": "16px",
-  "large": "24px"
-}
-
-# 4. CORE COMPONENT SPECIFICATIONS | 核心组件规范库
-
-## Format | 格式: 
-Component Name | Import Path | Core Props | Semantic Nodes | Compliant Example
+# 3. COMPONENT SPECIFICATIONS | 组件规范
 
 ---
 COMPONENT: Button
-IMPORT_PATH: import { Button } from '@arco-design/web-react';
-CORE_PROPS: {
-  "type": "default | primary | secondary | dashed | text | outline",
-  "status": "default | warning | success | danger",
-  "size": "mini | small | default | large",
-  "shape": "square | circle | round",
-  "disabled": "boolean",
-  "loading": "boolean",
-  "icon": "ReactNode",
-  "onClick": "(e) => void"
-}
-USAGE_EXAMPLE:
-```tsx
-import { Button } from '@arco-design/web-react';
-import { IconPlus } from '@arco-design/web-react/icon';
-
-export default function Example() {
-  return (
-    <Button type="primary" icon={<IconPlus />} onClick={() => console.log('click')}>
-      Create Bundle
-    </Button>
-  );
-}
-```
+PEN_PATH: arcoui/components/button.pen
+VARIANTS:
+  - "类型=主要按钮": type="primary"
+  - "类型=次要按钮": type="secondary"
+  - "类型=文字按钮": type="text"
+  - "形状=长方形": shape="square" (default)
+  - "形状=圆滑": shape="round"
+  - "形状=全圆角": shape="round" / cornerRadius=100
+  - "尺寸=大/中/小/迷你": size="large/default/small/mini"
+LAYOUT_LOGIC: Use "Gap: 8px" for icon-text spacing.
 
 ---
-COMPONENT: Input
-IMPORT_PATH: import { Input } from '@arco-design/web-react';
-CORE_PROPS: {
-  "placeholder": "string",
-  "disabled": "boolean",
-  "allowClear": "boolean",
-  "prefix": "ReactNode",
-  "suffix": "ReactNode",
-  "addBefore": "ReactNode",
-  "addAfter": "ReactNode",
-  "size": "mini | small | default | large",
-  "maxLength": "number | { length: number, errorOnly: boolean }",
-  "showWordLimit": "boolean",
-  "onChange": "(value: string, e) => void",
-  "onPressEnter": "(e) => void"
-}
-USAGE_EXAMPLE:
-```tsx
-import { Input } from '@arco-design/web-react';
-
-export default function Example() {
-  return (
-    <Input
-      style={{ width: 350 }}
-      allowClear
-      placeholder="Please enter something"
-      onChange={(v) => console.log(v)}
-    />
-  );
-}
-```
+COMPONENT: Input / Select
+PEN_PATH: arcoui/components/table and form.pen
+PROPERTIES:
+  - "布局=水平": field position relative to label
+  - "CornerRadius": 2px (default for inputs)
+  - "Height": 32px (Default), 24px (Small), 40px (Large)
+  - "Fill": #f2f3f5ff (Default Background), #ffffffff (Bordered mode)
+SUB_NODES:
+  - "addBefore/addAfter": prefix/suffix props
+  - "placeholder": content with color #86909cff
 
 ---
-COMPONENT: Select
-IMPORT_PATH: import { Select } from '@arco-design/web-react';
-CORE_PROPS: {
-  "placeholder": "string",
-  "bordered": "boolean",
-  "mode": "multiple",
-  "allowClear": "boolean",
-  "labelInValue": "boolean",
-  "options": "Array<string | number | { label: ReactNode, value: string | number, disabled?: boolean, ... }>",
-  "onChange": "(value) => void",
-  "style": "CSSProperties"
-}
-USAGE_EXAMPLE:
-```tsx
-import { Select } from '@arco-design/web-react';
-
-const options = ['Beijing', 'Shanghai', 'Guangzhou', 'Shenzhen'];
-
-export default function Example() {
-  return (
-    <Select
-      placeholder="Please select"
-      style={{ width: 154 }}
-      onChange={(value) => console.log(value)}
-    >
-      {options.map((option) => (
-        <Select.Option key={option} value={option}>
-          {option}
-        </Select.Option>
-      ))}
-    </Select>
-  );
-}
-```
+COMPONENT: Form.Item
+PEN_PATH: arcoui/components/table and form.pen
+LAYOUT:
+  - "label item": Horizontal layout, justifyContent="end", gap=4
+  - "extra/message": fontSize=12px, color=#86909cff
+RULES: Show asterisk (*) node when field is required using color #f53f3fff.
 
 ---
 COMPONENT: Card
-IMPORT_PATH: import { Card } from '@arco-design/web-react';
-CORE_PROPS: {
-  "title": "ReactNode",
-  "extra": "ReactNode",
-  "bordered": "boolean",
-  "loading": "boolean",
-  "size": "default | small",
-  "hoverable": "boolean",
-  "actions": "ReactNode[]",
-  "cover": "ReactNode"
-}
-USAGE_EXAMPLE:
-```tsx
-import { Card, Link } from '@arco-design/web-react';
-
-export default function Example() {
-  return (
-    <Card
-      style={{ width: 360 }}
-      title="Arco Card"
-      extra={<Link>More</Link>}
-    >
-      Arco Card Content
-    </Card>
-  );
-}
-```
+PEN_PATH: arcoui/components/card.pen
+STRUCTURE:
+  - "header": padding=[11, 16], border-bottom=1px #e5e6ebff
+  - "body": padding=16
+  - "title": fontSize=16px, fontWeight=500
+  - "extra": Link component in top right
+VARIANTS: "边框=true/false" -> bordered={true/false}
 
 ---
-COMPONENT: Space
-IMPORT_PATH: import { Space } from '@arco-design/web-react';
-CORE_PROPS: {
-  "align": "start | end | center | baseline",
-  "direction": "vertical | horizontal",
-  "size": "mini | small | medium | large | number",
-  "wrap": "boolean",
-  "split": "ReactNode"
-}
-USAGE_EXAMPLE:
-```tsx
-import { Space, Button } from '@arco-design/web-react';
-
-export default function Example() {
-  return (
-    <Space size="large">
-      <Button type="primary">Item 1</Button>
-      <Button>Item 2</Button>
-      <Button>Item 3</Button>
-    </Space>
-  );
-}
-```
+COMPONENT: Tabs
+PEN_PATH: arcoui/components/tabs.pen
+PROPERTIES:
+  - "选中=true": Active state, indicator border-bottom: 2px #165dffff
+  - "Hover state": Background #f2f3f5ff on tab item
+  - "禁用=true": Text color #c9cdd4ff
+SIZES: mini(24h), small(28h), medium(32h), large(36h)
 
 ---
-COMPONENT: Table
-IMPORT_PATH: import { Table } from '@arco-design/web-react';
-CORE_PROPS: {
-  "columns": "ColumnProps[]",
-  "data": "any[]",
-  "loading": "boolean",
-  "border": "boolean | { wrapper: boolean, headerCell: boolean, bodyCell: boolean }",
-  "pagination": "boolean | PaginationProps",
-  "rowKey": "string"
-}
-USAGE_EXAMPLE:
-```tsx
-import { Table } from '@arco-design/web-react';
-
-const columns = [
-  { title: 'Name', dataIndex: 'name' },
-  { title: 'Salary', dataIndex: 'salary' },
-  { title: 'Address', dataIndex: 'address' },
-  { title: 'Email', dataIndex: 'email' },
-];
-
-const data = [{
-  key: '1',
-  name: 'Jane Doe',
-  salary: 23000,
-  address: '32 Park Road, London',
-  email: 'jane.doe@example.com'
-}];
-
-export default function Example() {
-  return <Table columns={columns} data={data} />;
-}
-```
+COMPONENT: Breadcrumb
+PEN_PATH: arcoui/components/breadcrumb.pen
+TYPES:
+  - "斜杠分隔符": separator="/"
+  - "箭头分隔符": separator={<IconRight />}
+  - "圆点分隔符": separator="·"
+ITEM: Link component with gap=4 for icons.
 
 ---
-COMPONENT: Form
-IMPORT_PATH: import { Form, Input, Button } from '@arco-design/web-react';
-CORE_PROPS: {
-  "form": "FormInstance",
-  "layout": "horizontal | vertical | inline",
-  "size": "mini | small | default | large",
-  "initialValues": "object",
-  "onValuesChange": "(value, values) => void",
-  "onSubmit": "(values) => void"
-}
-USAGE_EXAMPLE:
-```tsx
-import { Form, Input, Button } from '@arco-design/web-react';
-const FormItem = Form.Item;
+COMPONENT: Menu
+PEN_PATH: arcoui/components/menu.pen
+VARIANTS: "类型=水平/垂直" (mode="horizontal/vertical")
+PROPERTIES:
+  - Active Item: backgroundColor="var(--color-fill-2)", color="var(--color-primary-6)"
+  - Group Title: fontSize=12, color=#86909cff
 
-export default function Example() {
-  const [form] = Form.useForm();
-  return (
-    <Form form={form} style={{ width: 600 }} autoComplete="off">
-      <FormItem label="Username" field="name" rules={[{ required: true }]}>
-        <Input placeholder="please enter your username..." />
-      </FormItem>
-      <FormItem wrapperCol={{ offset: 5 }}>
-        <Button type="primary" htmlType="submit">Submit</Button>
-      </FormItem>
-    </Form>
-  );
-}
-```
+---
+COMPONENT: Tag / Badge
+PEN_PATH: arcoui/components/tags.pen, link and badge.pen
+TAG_VARIANTS: "类型=常规/可检测/格栅/状态"
+BADGE: Circle with fill #f53f3fff for count/dot.
 
-# 5. FORBIDDEN LIST | 禁用清单
-# LLM must NEVER use these syntaxes/APIs | LLM 绝对禁止使用的语法/API
+---
+COMPONENT: List / Description
+PEN_PATH: arcoui/components/list.pen, arcoui/components/description.pen
+STRUCTURE:
+  - List Item: padding=[12, 16], border-bottom=1px #e5e6ebff
+  - Description Label: width=auto, color=#86909cff, textAlign="left"
 
-FORBIDDEN_LIST: [
-  "Use of native HTML elements when Arco components exist (e.g., <button> instead of <Button>)",
-  "Inline style={{}} for layout (Use <Space> or <Grid> instead)",
-  "Hardcoded colors (e.g., #165DFF) - Use CSS variables",
-  "Hardcoded spacing (e.g., margin: '20px') - Use <Space size='large'>",
-  "!important in custom CSS",
-  "Deprecated props (refer to official docs)"
-]
+# 4. TRANSFORMATION RULES | 转换规则
 
-# 6. ENGINEERING VALIDATION RULES | 工程化校验规则
-# CI/CD baseline standards - LLM generated code must satisfy these
-# CI/CD 兜底标准，LLM 生成代码需满足
+1. **Auto Layout Mapping**:
+   - `layout: horizontal` + `justifyContent: space_between` -> Flex container with `justify-content: space-between`.
+   - `padding: [top, right, bottom, left]` or `[vertical, horizontal]` -> standard CSS padding.
+   - `gap: N` -> space-between items or Flex `gap`.
 
-LINT_RULES: [
-  "ESLint: react/forbid-dom-props (for style)",
-  "Ensure all imports are from @arco-design/web-react",
-  "Verify no hardcoded hex color codes are used",
-  "Ensure accessibility props (alt, aria-labels) are present where needed"
-]
+2. **Component Mapping**:
+   - Frame name `类型=XXX, 尺寸=YYY` -> `<Component type="XXX" size="YYY" />`.
+   - `reusable: true` -> treat as an `@arco-design/web-react` component instance.
+
+3. **Text Nodes**:
+   - Map `fill` to `color`.
+   - Map `lineHeight` multiplier to CSS `line-height`.
+   - Map `fontWeight: "500"` to CSS `font-weight: 500` (Medium).
+
+# 5. FORBIDDEN PATTERNS | 禁用模式
+
+- ❌ NEVER use hardcoded pixels for layout (margin/padding) if the parent has `layout: "vertical" | "horizontal"`.
+- ❌ NEVER use hex colors directly in generated code. Always use `var(--color-...)` or component props.
+- ❌ NEVER ignore `enabled: false` nodes; they imply optional elements (like icons) that should remain conditional.
+
+# 6. CI/CD STANDARDS | CI/CD 兜底标准
+
+- Generated code must use TypeScript.
+- Import Icons from `@arco-design/web-react/icon`.
+- All form fields must be wrapped in `Form.Item` with appropriate `field` and `label` props.
 
 # 7. UPDATE LOG | 更新说明
-UPDATE_LOG:
-- v1.0.0: Initial generation of Arco Design React llms-full.txt
+- v1.0.0: Initial spec.
+- v1.2.0: Full coverage of all 18 component files from arcoui/components. Added detailed variants for Tabs, Breadcrumb, Menu, and Form.
+- v1.2.1: Formalized design tokens and transformation rules.
